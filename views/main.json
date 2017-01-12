@@ -1,0 +1,226 @@
+{
+  "DataSources": [
+    {
+      "RestDataSource": {
+        "Name": "EruditorDataSource",
+        "GettingParams": {
+          "Method": "get",
+          "Params": {
+            "Type": {
+              "Source": "TypesDataSource",
+              "Property": "$.Value"
+            }
+          },
+          "Path": "/api/<%Type%>",
+          "Data": {}
+        },
+        "UpdatingItemsConverter": "ResponseConverter"
+      }
+    },
+    {
+      "ObjectDataSource": {
+        "Name": "TypesDataSource",
+        "Items": [
+          {
+            "Name": "Факт",
+            "Value": "fact",
+            "Icon": "check-circle"
+          },
+          {
+            "Name": "Цитата",
+            "Value": "saying",
+            "Icon": "comment"
+          },
+          {
+            "Name": "Шутка",
+            "Value": "joke",
+            "Icon": "bug"
+          }
+        ],
+        "IsLazy": false
+      }
+    }
+  ],
+	"Items": [
+    {
+      "TablePanel": {
+        "Items": [
+          {
+            "Row": {
+              "Items": [
+                {
+                  "Cell": {
+                    "ColumnSpan": 12,
+                    "Items": [
+                      {
+                        "ScrollPanel": {
+                          "Items": [
+                            {
+                              "Panel": {
+                                "Style": "without-border",
+                                "HeaderTemplate": {
+                                  "TablePanel": {
+                                    "Items": [
+                                      {
+                                        "Row": {
+                                          "Items": [
+                                            {
+                                              "Cell": {
+                                                "ColumnSpan": 6,
+                                                "Items": [
+                                                  {
+                                                    "StackPanel": {
+                                                      "Orientation": "Horizontal",
+                                                      "HorizontalAlignment": "Left",
+                                                      "ViewMode": "FormGroup",
+                                                      "ItemTemplate":{
+                                                        "Button": {
+                                                          "ContentTemplate": {
+                                                            "Icon": {
+                                                              "Value": {
+                                                                "Source": "TypesDataSource",
+                                                                "Property": "#.Icon"
+                                                              }
+                                                            }
+                                                          },
+                                                          "ToolTip": {
+                                                            "Label": {
+                                                              "Value": {
+                                                                "Source": "TypesDataSource",
+                                                                "Property": "#.Name"
+                                                              }
+                                                            }
+                                                          },
+                                                          "Tag": {
+                                                            "Source": "TypesDataSource",
+                                                            "Property": "#"
+                                                          },
+                                                          "OnClick": "ChancheTypeButtonOnClick"
+                                                        }
+                                                      },
+                                                      "Items": {
+                                                        "Source": "TypesDataSource"
+                                                      }
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            {
+                                              "Cell": {
+                                                "ColumnSpan": 6,
+                                                "Items": [
+                                                  {
+                                                    "StackPanel": {
+                                                      "Orientation": "Horizontal",
+                                                      "HorizontalAlignment": "Right",
+                                                      "ViewMode": "FormGroup",
+                                                      "Items": [
+                                                        {
+                                                          "Button": {
+                                                            "ContentTemplate": {
+                                                              "Icon": {
+                                                                "Value": "refresh"
+                                                              }
+                                                            },
+                                                            "ToolTip": "Обновить",
+                                                            "OnClick": "UpdateRecord",
+                                                            "Background": "accent-success"
+                                                          }
+                                                        }
+                                                      ]
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                "TextHorizontalAlignment": "Center",
+                                "Items": [
+                                  {
+                                    "Label": {
+                                      "Value": {
+                                        "Source": "TypesDataSource",
+                                        "Property": "$.Name"
+                                      },
+                                      "TextHorizontalAlignment": "Center",
+                                      "TextStyle": "Display2"
+                                    }
+                                  },
+                                  {
+                                    "Label" :{
+                                      "Value": {
+                                        "Source": "EruditorDataSource",
+                                        "Property": "$.text"
+                                      },
+                                      "HorizontalAlignment": "Center",
+                                      "TextHorizontalAlignment": "Center",
+                                      "TextTrimming": false,
+                                      "TextWrapping": true,
+                                      "TextStyle": "Title"
+                                    }
+                                  },
+                                  {
+                                    "Label": {
+                                      "Value": {
+                                        "Source": "EruditorDataSource",
+                                        "Property": "$.author"
+                                      },
+                                      "TextHorizontalAlignment": "Right",
+                                      "TextStyle": "Subhead",
+                                      "Visible": {
+                                        "Source": "EruditorDataSource",
+                                        "Property": "$.author"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "Cell": {
+                    "ColumnSpan": 12,
+                    "Items": [
+                      {
+                        "Label": {
+                          "Text": "Eruditor.Next",
+                          "HorizontalAlignment": "Center",
+                          "TextStyle": "Bottom"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+	],
+  "Scripts": [
+    {
+      "Name": "UpdateRecord",
+      "Body": "context.dataSources.EruditorDataSource.updateItems();"
+    },
+    {
+      "Name": "ChancheTypeButtonOnClick",
+      "Body": "context.dataSources.TypesDataSource.setSelectedItem(args.source.getTag());"
+    },
+    {
+      "Name": "ResponseConverter",
+      "Body": "return [args.value];"
+    }
+  ]
+}
