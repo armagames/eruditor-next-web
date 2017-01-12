@@ -34,7 +34,7 @@
           {
             "Name": "Шутка",
             "Value": "joke",
-            "Icon": "bug"
+            "Icon": "bomb"
           }
         ],
         "IsLazy": false
