@@ -14,7 +14,7 @@
           "Path": "/api/<%Type%>",
           "Data": {}
         },
-        "UpdatingItemsConverter": "ResponseConverter"
+        "UpdatingItemsConverter": "{ return responseConverter(context, args); }"
       }
     },
     {
@@ -95,7 +95,7 @@
                                                             "Source": "TypesDataSource",
                                                             "Property": "#"
                                                           },
-                                                          "OnClick": "ChancheTypeButtonOnClick"
+                                                          "OnClick": "{ chancheTypeButtonOnClick(context, args); }"
                                                         }
                                                       },
                                                       "Items": {
@@ -124,7 +124,7 @@
                                                               }
                                                             },
                                                             "ToolTip": "Обновить",
-                                                            "OnClick": "UpdateRecord",
+                                                            "OnClick": "{ updateRecord(context, args); }",
                                                             "Background": "accent-success"
                                                           }
                                                         }
@@ -208,19 +208,5 @@
         ]
       }
     }
-	],
-  "Scripts": [
-    {
-      "Name": "UpdateRecord",
-      "Body": "context.dataSources.EruditorDataSource.updateItems();"
-    },
-    {
-      "Name": "ChancheTypeButtonOnClick",
-      "Body": "context.dataSources.TypesDataSource.setSelectedItem(args.source.getTag());"
-    },
-    {
-      "Name": "ResponseConverter",
-      "Body": "return [args.value];"
-    }
-  ]
+	]
 }
