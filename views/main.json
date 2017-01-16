@@ -1,4 +1,5 @@
 {
+  "OnLoaded": "{ onLoaded(context, args); }",
   "DataSources": [
     {
       "RestDataSource": {
@@ -6,15 +7,29 @@
         "GettingParams": {
           "Method": "get",
           "Params": {
-            "Type": {
-              "Source": "TypesDataSource",
-              "Property": "$.Value"
+            "Filter": {
+              "Source": "FilterDataSource",
+              "Property": "$.Filter",
+              "Mode": "ToElement",
+              "Converter": {
+                "ToElement": "{ return filterConverter(context, args); }"
+              }
             }
           },
-          "Path": "/api/<%Type%>",
+          "Path": "/api/<%Filter%>",
           "Data": {}
         },
         "UpdatingItemsConverter": "{ return responseConverter(context, args); }"
+      }
+    },
+    {
+      "ObjectDataSource": {
+        "Name": "FilterDataSource",
+        "Items": [
+          {
+            "Filter": null
+          }
+        ]
       }
     },
     {

@@ -1,9 +1,22 @@
 function updateRecord(context, args) {
-  context.dataSources.EruditorDataSource.updateItems();
+  var currentFilter = context.dataSources.FilterDataSource.getProperty('$.Filter');
+  if (currentFilter && currentFilter.split('/').length === 1) {
+    context.dataSources.EruditorDataSource.updateItems();
+  } else {
+    currentSelectedFilter = context.dataSources.TypesDataSource.getProperty('$.Value');
+    context.dataSources.FilterDataSource.setProperty('$.Filter', currentSelectedFilter);
+  }
 }
 
 function chancheTypeButtonOnClick(context, args) {
   context.dataSources.TypesDataSource.setSelectedItem(args.source.getTag());
+  var tag = context.dataSources.TypesDataSource.getSelectedItem();
+  var hashParam = getHashParams();
+
+  var type = tag.Value || hashParam.type;
+
+  changeFilterItem(context, type);
+  context.dataSources.FilterDataSource.setProperty('$.Filter', type);
 }
 
 function responseConverter(context, args) {
@@ -19,33 +32,61 @@ function responseConverter(context, args) {
   return [value];
 }
 
+function onLoaded(context, args) {
+  window.onpopstate = function (e) {
+    onPopStateFunc(context, args, e);
+  }
+}
+
+function onPopStateFunc(context, args, e) {
+  var hashParams = getHashParams();
+  var filter = getValueOrDefault(hashParams);
+  changeFilterItem(context, filter);
+  context.dataSources.FilterDataSource.setProperty('$.Filter', filter);
+}
+
+function filterConverter(context, args) {
+  var hashParams = getHashParams();
+  var result = args.value || getValueOrDefault(hashParams);
+
+  return result;
+}
+
 function getHashParams() {
-  var params = {};
-
-  location.hash.slice(1).split('&')
-    .filter(function(i) {
-      return i;
-    })
-    .forEach(function(i) {
-      var a=i.split('=');
-      params[a[0]] = a[1];
-    });
-
-  return params;
+  return location.hash.slice(1);
 }
 
 function getHashFromObject(o) {
-  var value = o || {};
-  var params = [
-    ['type', value.type],
-    ['id', value.id]
-  ];
-
-  var hash = params.filter(function(i) {
-    return i[1];
-  }).map(function(i) {
-    return i.join('=');
-  }).join('&');
-
+  var paramsArray = getParamsAsArrayFromObject(o);
+  var hash = paramsArray.join('/');
   return hash;
+}
+
+function getParamsAsArrayFromObject(o) {
+  var value = o || {};
+  return [
+    value.type,
+    value.id
+  ].filter(function (i) {
+    return i;
+  });
+}
+
+function getValueOrDefault(value) {
+  return value || 'fact';
+}
+
+function changeFilterItem(context, filter) {
+  var f = (filter || '').split('/')[0];
+  var type = getValueOrDefault(f);
+
+  var items = context.dataSources.TypesDataSource.getItems();
+
+  var item = items.find(function(i) {
+    return i.Value === type;
+  });
+
+  if (item) {
+    context.dataSources.TypesDataSource.setSelectedItem(item);
+  }
 }
