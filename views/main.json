@@ -55,7 +55,7 @@
       }
     }
   ],
-	"Items": [
+  "Items": [
     {
       "TablePanel": {
         "Items": [
@@ -87,7 +87,7 @@
                                                       "Orientation": "Horizontal",
                                                       "HorizontalAlignment": "Left",
                                                       "ViewMode": "FormGroup",
-                                                      "ItemTemplate":{
+                                                      "ItemTemplate": {
                                                         "Button": {
                                                           "ContentTemplate": {
                                                             "Icon": {
@@ -167,7 +167,7 @@
                                     }
                                   },
                                   {
-                                    "Label" :{
+                                    "Label": {
                                       "Value": {
                                         "Source": "EruditorDataSource",
                                         "Property": "$.text"
@@ -191,6 +191,12 @@
                                         "Source": "EruditorDataSource",
                                         "Property": "$.author"
                                       }
+                                    }
+                                  },
+                                  {
+                                    "ExtensionPanel": {
+                                      "ExtensionName": "ShareBox",
+                                      "HorizontalAlignment": "Center"
                                     }
                                   }
                                 ]
@@ -222,5 +228,5 @@
         ]
       }
     }
-	]
+  ]
 }
