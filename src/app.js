@@ -66,7 +66,7 @@ function getParamsAsArrayFromObject(o) {
   var value = o || {};
   return [
     value.type,
-    value.id
+    value._id
   ].filter(function (i) {
     return i;
   });
