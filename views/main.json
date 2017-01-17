@@ -2,6 +2,28 @@
   "OnLoaded": "{ onLoaded(context, args); }",
   "DataSources": [
     {
+      "ObjectDataSource": {
+        "Name": "TypesDataSource",
+        "Items": [
+          {
+            "Name": "Факт",
+            "Value": "fact",
+            "Icon": "check-circle"
+          },
+          {
+            "Name": "Цитата",
+            "Value": "saying",
+            "Icon": "comment"
+          },
+          {
+            "Name": "Шутка",
+            "Value": "joke",
+            "Icon": "bomb"
+          }
+        ]
+      }
+    },
+    {
       "RestDataSource": {
         "Name": "EruditorDataSource",
         "GettingParams": {
@@ -30,29 +52,6 @@
             "Filter": null
           }
         ]
-      }
-    },
-    {
-      "ObjectDataSource": {
-        "Name": "TypesDataSource",
-        "Items": [
-          {
-            "Name": "Факт",
-            "Value": "fact",
-            "Icon": "check-circle"
-          },
-          {
-            "Name": "Цитата",
-            "Value": "saying",
-            "Icon": "comment"
-          },
-          {
-            "Name": "Шутка",
-            "Value": "joke",
-            "Icon": "bomb"
-          }
-        ],
-        "IsLazy": false
       }
     }
   ],

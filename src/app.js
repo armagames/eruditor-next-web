@@ -9,14 +9,16 @@ function updateRecord(context, args) {
 }
 
 function chancheTypeButtonOnClick(context, args) {
-  context.dataSources.TypesDataSource.setSelectedItem(args.source.getTag());
-  var tag = context.dataSources.TypesDataSource.getSelectedItem();
+  context.dataSources.EruditorDataSource.suspendUpdate();
+  var tag = args.source.getTag();
   var hashParam = getHashParams();
 
   var type = tag.Value || hashParam.type;
 
   changeFilterItem(context, type);
   context.dataSources.FilterDataSource.setProperty('$.Filter', type);
+  context.dataSources.EruditorDataSource.updateItems();
+  context.dataSources.EruditorDataSource.resumeUpdate();
 }
 
 function responseConverter(context, args) {
@@ -49,6 +51,7 @@ function filterConverter(context, args) {
   var hashParams = getHashParams();
   var result = args.value || getValueOrDefault(hashParams);
 
+  changeFilterItem(context, result);
   return result;
 }
 
