@@ -1,4 +1,4 @@
-function updateRecord(context, args) {
+function updateRecord(context) {
   var currentFilter = context.dataSources.FilterDataSource.getProperty('$.Filter');
   if (currentFilter && currentFilter.split('/').length === 1) {
     context.dataSources.EruditorDataSource.updateItems();
@@ -85,11 +85,62 @@ function changeFilterItem(context, filter) {
 
   var items = context.dataSources.TypesDataSource.getItems();
 
-  var item = items.find(function(i) {
+  var item = items.find(function (i) {
     return i.Value === type;
   });
 
   if (item) {
     context.dataSources.TypesDataSource.setSelectedItem(item);
   }
+}
+
+function settingsUpdate(context, args) {
+  var period = args.value && args.value.Value;
+
+  if (period) {
+    console.log(period);
+  } else {
+    console.log('no autoupdate');
+  }
+
+  autoUpdateFunc(context, period, 0);
+}
+
+function autoUpdateFunc(context, targetPeriod, count) {
+  var settingDataSource = context.dataSources.SettingsDataSource;
+  var period = settingDataSource && settingDataSource.getProperty('$.Value');
+
+  if (period && period === targetPeriod) {
+    if (count > 0) {
+      context.dataSources.EruditorDataSource.updateItems();
+    }
+    window.setTimeout(autoUpdateFunc.bind(null, context, period, ++count), period);
+  }
+}
+
+function setPeriodesToDataSource(context) {
+  var items = [
+    {
+      Text: 'Не обновлять',
+      Value: 0
+    },
+    {
+      Text: 'Обновлять каждую минуту',
+      Value: 60000
+    },
+    {
+      Text: 'Обновлять каждые 5 минут',
+      Value: 300000
+    },
+    {
+      Text: 'Обновлять каждые 10 минут',
+      Value: 600000
+    },
+    {
+      Text: 'Обновлять каждые 15 минут',
+      Value: 900000
+    }
+  ]
+
+  context.dataSources.PeriodesDataSource.setItems(items);
 }
