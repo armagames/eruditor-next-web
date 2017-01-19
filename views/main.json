@@ -145,9 +145,9 @@
                                                             "ContentTemplate": {
                                                               "Icon": {
                                                                 "Value": "cog"
-                                                              },
-                                                              "ToolTip": "Параметры"
+                                                              }
                                                             },
+                                                            "ToolTip": "Параметры",
                                                             "Action": {
                                                               "EditAction": {
                                                                 "DestinationValue": {
