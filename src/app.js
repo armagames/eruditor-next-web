@@ -98,9 +98,9 @@ function settingsUpdate(context, args) {
   var period = args.value && args.value.Value;
 
   if (period) {
-    console.log(period);
+    console.log('set auto update ' + period);
   } else {
-    console.log('no autoupdate');
+    console.log('no auto update');
   }
 
   autoUpdateFunc(context, period, 0);
@@ -112,7 +112,8 @@ function autoUpdateFunc(context, targetPeriod, count) {
 
   if (period && period === targetPeriod) {
     if (count > 0) {
-      context.dataSources.EruditorDataSource.updateItems();
+      updateRecord(context);
+      console.log(new Date() + ' :update #' + count);
     }
     window.setTimeout(autoUpdateFunc.bind(null, context, period, ++count), period);
   }
