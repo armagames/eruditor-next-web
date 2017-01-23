@@ -4,7 +4,7 @@ window.InfinniUI.config.lang = 'en-US';
 
 window.InfinniUI.config.useLoaderIndicator = true;
 
-window.InfinniUI.config.serverUrl = 'http://armagames.org:27099'
+window.InfinniUI.config.serverUrl = 'http://e.armagames.org/api'
 window.InfinniUI.config.configName = 'Eruditor.Next';
 
 window.InfinniUI.config.homePage = 'views/main.json';

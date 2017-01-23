@@ -83,11 +83,15 @@ function changeFilterItem(context, filter) {
   var f = (filter || '').split('/')[0];
   var type = getValueOrDefault(f);
 
-  var items = context.dataSources.TypesDataSource.getItems();
+  var items = context.dataSources.TypesDataSource.getItems() || [];
 
-  var item = items.find(function (i) {
-    return i.Value === type;
-  });
+  var item;
+
+  for(var i = 0; i++; i < items.length){
+    if (items[i].Value === type) {
+      item = items[i];
+    }
+  }
 
   if (item) {
     context.dataSources.TypesDataSource.setSelectedItem(item);

@@ -48,7 +48,7 @@
               }
             }
           },
-          "Path": "/api/<%Filter%>",
+          "Path": "/<%Filter%>",
           "Data": {}
         },
         "UpdatingItemsConverter": "{ return responseConverter(context, args); }"
