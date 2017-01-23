@@ -1,11 +1,6 @@
 function updateRecord(context) {
-  var currentFilter = context.dataSources.FilterDataSource.getProperty('$.Filter');
-  if (currentFilter && currentFilter.split('/').length === 1) {
-    context.dataSources.EruditorDataSource.updateItems();
-  } else {
-    currentSelectedFilter = context.dataSources.TypesDataSource.getProperty('$.Value');
-    context.dataSources.FilterDataSource.setProperty('$.Filter', currentSelectedFilter);
-  }
+  currentSelectedFilter = context.dataSources.TypesDataSource.getProperty('$.Value') + '?' + Date.now();
+  context.dataSources.FilterDataSource.setProperty('$.Filter', currentSelectedFilter);
 }
 
 function chancheTypeButtonOnClick(context, args) {
@@ -52,7 +47,7 @@ function filterConverter(context, args) {
   var result = args.value || getValueOrDefault(hashParams);
 
   changeFilterItem(context, result);
-  return result + '?'+ Date.now();
+  return result + '?' + Date.now();
 }
 
 function getHashParams() {
@@ -87,7 +82,7 @@ function changeFilterItem(context, filter) {
 
   var item;
 
-  for(var i = 0; i < items.length; i++){
+  for (var i = 0; i < items.length; i++) {
     if (items[i].Value === type) {
       item = items[i];
     }
