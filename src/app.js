@@ -52,7 +52,7 @@ function filterConverter(context, args) {
   var result = args.value || getValueOrDefault(hashParams);
 
   changeFilterItem(context, result);
-  return result;
+  return result + '?'+ Date.now();
 }
 
 function getHashParams() {
