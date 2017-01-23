@@ -87,7 +87,7 @@ function changeFilterItem(context, filter) {
 
   var item;
 
-  for(var i = 0; i++; i < items.length){
+  for(var i = 0; i < items.length; i++){
     if (items[i].Value === type) {
       item = items[i];
     }
